@@ -1,248 +1,218 @@
-// ======================
-// 0️⃣ Data Awal
-// ======================
-
-// Daftar siswa (contoh)
-let siswaList = [
-  {nama: "Agha Muhammad Azam Ar-Rosyid", panggilan:"azam", absen:1},
-  {nama: "Aldiansah Arga Pratama", panggilan:"arga", absen:2},
-  {nama: "Fahad Ahmad Alamudi", panggilan:"fahad", absen:3},
-  {nama: "Intan Nirmalasari Salabila Roskiani", panggilan:"intan", absen:4},
-  {nama: "Mohammad Farid Syaifulloh", panggilan:"farid", absen:5},
-  {nama: "Mohammad Musyafa Akbar", panggilan:"musyafa", absen:6},
-  {nama: "Muhammad Irfan Arisaputra Islahudin", panggilan:"irfan", absen:7},
-  {nama: "Muhammad Michael Al-Muhith", panggilan:"michael", absen:8},
-  {nama: "Naila Rheisy Admaja Veaka", panggilan:"rheisy", absen:9},
-  {nama: "Salma Larissa Indrasari", panggilan:"salma", absen:10}
+// ===== DATA =====
+let siswa = [
+  "Agha Muhammad Azam Ar-Rosyid",
+  "Aldiansah Arga Pratama",
+  "Fahad Ahmad Alamudi",
+  "Intan Nirmalasari Salabila Roskiani",
+  "Mohammad Farid Syaifulloh",
+  "Mohammad Musyafa Akbar",
+  "Muhammad Irfan Arisaputra Islahudin",
+  "Muhammad Michael Al-Muhith",
+  "Naila Rheisy Admaja Veaka",
+  "Salma Larissa Indrasari"
 ];
 
-// Login users (username bisa panggilan/nama/awal, password panggilan+absen)
-let loginUsers = siswaList.map(s=>({
-  usernameOptions: [s.nama.toLowerCase().replace(/\s/g,''), s.panggilan.toLowerCase()],
-  password: (s.panggilan + s.absen).toLowerCase()
-}));
+// Jadwal Pelajaran
+let JadwalPelajaran = {
+  Senin: ["Geografi","Matematika","Bahasa Indonesia","Seni Rupa","Biologi"],
+  Selasa: ["Bahasa Jawa","Sejarah","Kemuhammadiyahan","Informatika","Geografi","Ekonomi"],
+  Rabu: ["Penjaskes","Bahasa Arab","PAI","Ekonomi"],
+  Kamis: ["Biologi","Bahasa Indonesia","PAI","Bahasa Inggris","Sosiologi"],
+  Jumat: ["PPKN","BK","Matematika","Sosiologi"]
+};
 
-// Data absensi & tugas
-let absensiData = JSON.parse(localStorage.getItem("absensiData")) || {};
-let tugasData = JSON.parse(localStorage.getItem("tugasData")) || [];
-let motivasiList = [
-  "Hari ini kamu luar biasa 🌸",
-  "Tetap semangat dan tersenyum 😄",
-  "Setiap usaha pasti membuahkan hasil 💪",
-  "Jangan lupa bahagia yaa 😊",
-  "Belajar itu menyenangkan, nikmati prosesnya 📚"
+// Jadwal Piket
+let JadwalPiket = {
+  Senin: ["Azam","Salma"],
+  Selasa: ["Farid","Musyafa"],
+  Rabu: ["Michael","Irma"],
+  Kamis: ["Fahad","Rheisy"],
+  Jumat: ["Arga","Irfan"]
+};
+
+// Tugas
+let Tugas = JSON.parse(localStorage.getItem("tugas")) || [];
+
+// Absensi
+let Absensi = JSON.parse(localStorage.getItem("absensi")) || {};
+
+// Kas
+let Kas = JSON.parse(localStorage.getItem("kas")) || {};
+
+// Motivasi
+let MotivasiList = [
+  "Semangat pagi, semoga hari ini penuh prestasi 🌸",
+  "Kamu bisa, terus berusaha 💜",
+  "Setiap hari adalah kesempatan baru untuk belajar ✨",
+  "Jangan menyerah, sukses menunggu di depan 🚀"
 ];
-let kasData = JSON.parse(localStorage.getItem("kasData")) || [];
 
-// ======================
-// 1️⃣ Login / Logout
-// ======================
+// Admin
+let adminUser = "admineleventwolighthouse";
+let adminPass = "112rumahbercahaya";
+
+// ===== LOGIN =====
 function login(){
-  let userInput = document.getElementById("username").value.toLowerCase().replace(/\s/g,'');
-  let passInput = document.getElementById("password").value.toLowerCase().replace(/\s/g,'');
-  let valid = loginUsers.find(u => u.usernameOptions.includes(userInput) && u.password === passInput);
-  if(valid){
+  let u = document.getElementById("username").value.toLowerCase().replace(/\s+/g,'');
+  let p = document.getElementById("password").value.toLowerCase().replace(/\s+/g,'');
+  if((siswa.map(s=>s.split(" ")[0].toLowerCase()).includes(u) && p) || (u===adminUser && p===adminPass)){
     document.getElementById("loginSection").style.display="none";
     document.getElementById("appSection").style.display="block";
     renderSiswa();
-    renderAbsensi();
     renderTugas();
-    renderKas();
+    renderJadwal();
+    pengingatPiket();
     motivasiRandom();
+    loadKas();
     initCamera();
-  } else{
-    document.getElementById("loginMsg").innerText="Username atau Password salah 😢";
+  } else {
+    document.getElementById("loginMsg").innerText="Username/Password salah!";
   }
 }
+
 function logout(){
-  location.reload();
+  document.getElementById("appSection").style.display="none";
+  document.getElementById("loginSection").style.display="block";
 }
 
-// ======================
-// 2️⃣ Tabs
-// ======================
-function showTab(tabName){
-  let tabs = document.getElementsByClassName("tabContent");
-  for(let t of tabs){ t.style.display="none"; }
-  document.getElementById(tabName).style.display="block";
-  let btns = document.getElementsByClassName("tabBtn");
-  for(let b of btns){ b.classList.remove("active"); }
-  event.target.classList.add("active");
+// ===== TAB =====
+function showTab(tab){
+  let tabs = document.querySelectorAll(".tabContent");
+  tabs.forEach(t=>t.style.display="none");
+  document.getElementById(tab).style.display="block";
+  document.querySelectorAll(".tabBtn").forEach(b=>b.classList.remove("active"));
+  event.currentTarget.classList.add("active");
 }
 
-// ======================
-// 3️⃣ Daftar Siswa + Search
-// ======================
+// ===== SISWA =====
 function renderSiswa(){
-  let list = document.getElementById("daftarSiswa");
-  list.innerHTML="";
-  siswaList.forEach(s=>{
-    let li = document.createElement("li");
-    li.className="siswaItem";
-    li.innerText = s.nama + " ("+s.panggilan+")";
-    list.appendChild(li);
+  let ul = document.getElementById("daftarSiswa");
+  ul.innerHTML="";
+  siswa.forEach(s=>{
+    let li=document.createElement("li");
+    li.innerText=s;
+    ul.appendChild(li);
   });
 }
 
 function searchSiswa(){
-  let val = document.getElementById("searchSiswa").value.toLowerCase();
-  let items = document.getElementsByClassName("siswaItem");
-  for(let i of items){
-    i.style.display = i.innerText.toLowerCase().includes(val)?"block":"none";
-  }
-}
-
-// ======================
-// 4️⃣ Absensi
-// ======================
-function renderAbsensi(){
-  let list = document.getElementById("absensiList");
-  list.innerHTML="";
-  let today = new Date().toISOString().split('T')[0];
-  siswaList.forEach(s=>{
-    let div = document.createElement("div");
-    div.className="absensiItem";
-    let status = (absensiData[today] && absensiData[today][s.panggilan]) || "Alpha";
-    div.innerHTML = `
-      <strong>${s.nama}</strong><br>
-      Status: 
-      <select onchange="updateAbsensi('${s.panggilan}', this.value)">
-        <option ${status==="Hadir"?"selected":""}>Hadir</option>
-        <option ${status==="Izin"?"selected":""}>Izin</option>
-        <option ${status==="Sakit"?"selected":""}>Sakit</option>
-        <option ${status==="Alpha"?"selected":""}>Alpha</option>
-      </select>
-      <button onclick="showScan('${s.panggilan}')">Scan Wajah</button>
-    `;
-    list.appendChild(div);
+  let q=document.getElementById("searchSiswa").value.toLowerCase();
+  document.querySelectorAll("#daftarSiswa li").forEach(li=>{
+    li.style.display=li.innerText.toLowerCase().includes(q)?"block":"none";
   });
 }
 
-function updateAbsensi(panggilan, value){
-  let today = new Date().toISOString().split('T')[0];
-  if(!absensiData[today]) absensiData[today]={};
-  absensiData[today][panggilan]=value;
-  localStorage.setItem("absensiData", JSON.stringify(absensiData));
-}
-
-// ======================
-// 5️⃣ Scan Wajah
-// ======================
-const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
-
-function initCamera(){
-  navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}})
-    .then(stream => video.srcObject = stream)
-    .catch(err => alert("Tidak bisa mengakses kamera. Pastikan izin kamera diberikan."));
-}
-
-function ambilFoto(){
-  context.drawImage(video,0,0,canvas.width,canvas.height);
-  alert("Foto berhasil diambil!");
-}
-
-function showScan(panggilan){
-  showTab('scan');
-}
-
-// ======================
-// 6️⃣ Tugas / PR
-// ======================
+// ===== TUGAS =====
 function renderTugas(){
-  let list = document.getElementById("listTugas");
-  list.innerHTML="";
-  tugasData.forEach((t,i)=>{
-    let li = document.createElement("li");
+  let ul = document.getElementById("listTugas");
+  ul.innerHTML="";
+  tugas.forEach((t,i)=>{
+    let li=document.createElement("li");
     li.className="tugasItem";
-    li.innerHTML=`<strong>${t.nama}</strong> - Deadline: ${t.deadline} <input type="checkbox" ${t.done?"checked":""} onchange="toggleTugas(${i},this.checked)"> <button onclick="hapusTugas(${i})">Hapus</button>`;
-    list.appendChild(li);
+    li.innerHTML=`${t.nama} - ${t.deadline} <input type="checkbox" onchange="toggleTugas(${i})" ${t.done?"checked":""}>`;
+    ul.appendChild(li);
   });
+  localStorage.setItem("tugas",JSON.stringify(tugas));
 }
 
 function tambahTugas(){
-  let nama = prompt("Nama tugas / PR?");
-  let deadline = prompt("Deadline (YYYY-MM-DD)?");
-  if(nama && deadline){
-    tugasData.push({nama, deadline, done:false});
-    localStorage.setItem("tugasData", JSON.stringify(tugasData));
-    renderTugas();
-  }
+  let nama = prompt("Nama tugas:");
+  let deadline = prompt("Deadline (YYYY-MM-DD):");
+  if(nama && deadline){tugas.push({nama,deadline,done:false}); renderTugas();}
 }
 
-function hapusTugas(i){
-  tugasData.splice(i,1);
-  localStorage.setItem("tugasData", JSON.stringify(tugasData));
+function toggleTugas(i){
+  tugas[i].done = !tugas[i].done;
   renderTugas();
 }
 
-function toggleTugas(i,val){
-  tugasData[i].done = val;
-  localStorage.setItem("tugasData", JSON.stringify(tugasData));
+// ===== JADWAL & PIKET =====
+function renderJadwal(){
+  let container = document.getElementById("jadwalList");
+  container.innerHTML="";
+  Object.keys(jadwalPelajaran).forEach(hari=>{
+    let div = document.createElement("div");
+    div.className="jadwalItem";
+    let pelajaran = jadwalPelajaran[hari].join(", ");
+    let piket = jadwalPiket[hari].join(", ");
+    div.innerHTML=`<strong>${hari.toUpperCase()}</strong><br>Pelajaran: ${pelajaran}<br>Piket: ${piket} <button onclick="ceklisPiket('${hari}')">Ceklis Piket</button>`;
+    container.appendChild(div);
+  });
 }
 
-// ======================
-// 7️⃣ Motivasi
-// ======================
+function isAdmin(){ return document.getElementById("username").value.toLowerCase()===adminUser; }
+
+function ceklisPiket(hari){
+  if(!isAdmin()){alert("Hanya admin bisa ceklis!"); return;}
+  kas[hari]="ceklist";
+  localStorage.setItem("kas",JSON.stringify(kas));
+  alert("Piket hari "+hari+" diceklis ✅");
+}
+
+function pengingatPiket(){
+  let today = new Date().toLocaleDateString('id-ID',{weekday:'long'}).toLowerCase();
+  if(jadwalPiket[today] && !kas[today]) alert("Pengingat: Piket hari ini ("+today+") belum diceklis!");
+}
+
+// ===== MOTIVASI =====
 function motivasiRandom(){
   let text = motivasiList[Math.floor(Math.random()*motivasiList.length)];
   document.getElementById("motivasiText").innerText=text;
 }
 
-// ======================
-// 8️⃣ Kas Admin Only
-// ======================
-function renderKas(){
-  let list = document.getElementById("kasList");
-  list.innerHTML="";
-  kasData.forEach((k,i)=>{
-    let li = document.createElement("li");
-    li.innerHTML=`${k.tanggal} - Rp ${k.nominal} - <input type="checkbox" ${k.done?"checked":""} onchange="toggleKas(${i},this.checked)">`;
-    if(!isAdmin()) li.querySelector("input").disabled=true;
-    list.appendChild(li);
-  });
+// ===== KAS =====
+function loadKas(){
+  let ul=document.getElementById("kasList");
+  ul.innerHTML="";
+  for(let k in kas){ let li=document.createElement("li"); li.innerText=k+": "+kas[k]; ul.appendChild(li);}
 }
 
-// Contoh admin check
-function isAdmin(){
-  // sementara contoh: panggilan "azam" adalah admin
-  let user = document.getElementById("username").value.toLowerCase().replace(/\s/g,'');
-  return user==="azam";
-}
-
-function toggleKas(i,val){
-  kasData[i].done = val;
-  localStorage.setItem("kasData", JSON.stringify(kasData));
-}
-
-// ======================
-// 9️⃣ Calendar
-// ======================
-function lihatTanggal(){
-  let date = document.getElementById("calendarDate").value;
-  let msg = `Tanggal: ${date}\n`;
-  if(absensiData[date]){
-    msg += "Absensi:\n";
-    for(let s in absensiData[date]){
-      msg += s + " : " + absensiData[date][s] + "\n";
-    }
-  } else msg += "Absensi kosong\n";
-  msg += "Tugas:\n";
-  tugasData.forEach(t=>{
-    if(t.deadline===date) msg+=t.nama+"\n";
-  });
-  document.getElementById("selectedDate").innerText=msg;
-}
-
-// ======================
-// 10️⃣ Search Option
-// ======================
-function searchOption(){
-  let val = document.getElementById("searchOption").value.toLowerCase();
-  let options = {siswa:'siswa', absensi:'absensi', tugas:'tugas', calendar:'calendar', jadwal:'jadwal', motivasi:'motivasi', kas:'kas'};
-  for(let key in options){
-    let display = key.includes(val)?"block":"none";
-    document.getElementById(options[key]).style.display=display;
+// ===== CAMERA =====
+function initCamera(){
+  let video=document.getElementById("video");
+  if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({video:true}).then(stream=>{video.srcObject=stream;}).catch(e=>{alert("Kamera tidak aktif!");});
   }
 }
+function ambilFoto(){
+  let video=document.getElementById("video");
+  let canvas=document.getElementById("canvas");
+  let ctx=canvas.getContext("2d");
+  ctx.drawImage(video,0,0,canvas.width,canvas.height);
+  alert("Foto berhasil diambil ✅");
+}
+
+// ===== SEARCH OPTIONS =====
+function searchOption(){
+  let q=document.getElementById("searchOption").value.toLowerCase();
+  document.querySelectorAll(".tabBtn").forEach(b=>{
+    b.style.display=b.innerText.toLowerCase().includes(q)?"inline-block":"none";
+  });
+}
+
+// ===== ABSENSI =====
+function renderAbsensi(){
+  let container=document.getElementById("absensiList");
+  container.innerHTML="";
+  siswa.forEach(s=>{
+    let div=document.createElement("div");
+    div.className="absensiItem";
+    div.innerHTML=`${s} <select onchange="updateAbsensi('${s}',this.value)">
+      <option value="">--Pilih--</option>
+      <option value="Hadir">Hadir</option>
+      <option value="Izin">Izin</option>
+      <option value="Sakit">Sakit</option>
+      <option value="Alpha">Alpha</option>
+    </select>`;
+    container.appendChild(div);
+  });
+}
+
+function updateAbsensi(s,name){
+  let today=new Date().toISOString().slice(0,10);
+  if(!absensi[today]) absensi[today]={};
+  absensi[today][s]=name;
+  localStorage.setItem("absensi",JSON.stringify(absensi));
+}
+
+renderAbsensi();
