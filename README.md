@@ -2,8 +2,7 @@
 ElevenTwo Lighthouse
 
 ## Deskripsi
-Project ini adalah aplikasi yang bermanfaat untuk pelajar.  
-Fungsinya untuk belajar HTML, CSS, dan JavaScript.
+Project ini adalah aplikasi yang bermanfaat untuk pelajar karena berisi berbagai kebutuhan sekolah, seperti jadwal pelajaran, absensi, dan informasi penting lainnya. Aplikasi ini membantu siswa untuk lebih terorganisir dan memudahkan pengelolaan kegiatan sekolah.
 
 ## Struktur Folder
 ElevenTwo-Lighthouse/
