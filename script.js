@@ -13,16 +13,21 @@ let siswa = [
 ];
 
 // Jadwal Pelajaran
-let JadwalPelajaran = {
+let jadwalPelajaran = {
   Senin: ["Geografi","Matematika","Bahasa Indonesia","Seni Rupa","Biologi"],
   Selasa: ["Bahasa Jawa","Sejarah","Kemuhammadiyahan","Informatika","Geografi","Ekonomi"],
   Rabu: ["Penjaskes","Bahasa Arab","PAI","Ekonomi"],
   Kamis: ["Biologi","Bahasa Indonesia","PAI","Bahasa Inggris","Sosiologi"],
   Jumat: ["PPKN","BK","Matematika","Sosiologi"]
+// Keterangan
+let keterangan = {
+  Rabu: ["Double Track"],
+  Kamis: ["Hizbul Wathan"],
+  Jumat: ["Tapak Suci"]
 };
 
 // Jadwal Piket
-let JadwalPiket = {
+let jadwalPiket = {
   Senin: ["Azam","Salma"],
   Selasa: ["Farid","Musyafa"],
   Rabu: ["Michael","Irma"],
@@ -31,16 +36,16 @@ let JadwalPiket = {
 };
 
 // Tugas
-let Tugas = JSON.parse(localStorage.getItem("tugas")) || [];
+let tugas = JSON.parse(localStorage.getItem("tugas")) || [];
 
 // Absensi
-let Absensi = JSON.parse(localStorage.getItem("absensi")) || {};
+let absensi = JSON.parse(localStorage.getItem("absensi")) || {};
 
 // Kas
-let Kas = JSON.parse(localStorage.getItem("kas")) || {};
+let kas = JSON.parse(localStorage.getItem("kas")) || {};
 
 // Motivasi
-let MotivasiList = [
+let motivasiList = [
   "Semangat pagi, semoga hari ini penuh prestasi 🌸",
   "Kamu bisa, terus berusaha 💜",
   "Setiap hari adalah kesempatan baru untuk belajar ✨",
