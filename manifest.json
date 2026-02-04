@@ -1,9 +1,22 @@
 {
-  "name":"ElevenTwo Lighthouse",
-  "short_name":"ElevenTwo",
-  "start_url":"index.html",
-  "display":"standalone",
-  "background_color":"#f5f3ff",
-  "theme_color":"#7c3aed",
-  "icons":[{"src":"images/icon-absensi.png","sizes":"192x192","type":"image/png"}]
+  "name": "ElevenTwo Lighthouse",
+  "short_name": "ETLighthouse",
+  "description": "Project ini adalah aplikasi yang bermanfaat untuk pelajar karena berisi berbagai kebutuhan sekolah, seperti jadwal pelajaran, absensi, dan informasi penting lainnya. Aplikasi ini membantu siswa untuk lebih terorganisir dan memudahkan pengelolaan kegiatan sekolah",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6a5acd",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/icon.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "images/icon.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
 }
