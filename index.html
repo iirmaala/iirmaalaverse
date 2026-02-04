@@ -13,64 +13,85 @@
 <section id="loginSection" class="card">
   <h1>Login ElevenTwo Lighthouse 🌸</h1>
   <label>Username:</label>
-  <input type="text" id="username" placeholder="nama panggilan (huruf kecil)">
+  <input type="text" id="username" placeholder="Nama panggilan / awal / lengkap">
   <label>Password:</label>
-  <input type="password" id="password" placeholder="nomor absen">
+  <input type="password" id="password" placeholder="Nama panggilan + nomor absen">
   <button onclick="login()" class="btn">Login</button>
   <p id="loginMsg"></p>
 </section>
 
 <!-- App utama -->
 <section id="appSection" style="display:none;">
-  <header class="header">
+  <!-- background sampul -->
+  <div class="background-sampul"></div>
+
+  <header class="header fade-in">
     <h1>Selamat datang di ElevenTwo Lighthouse 🌸</h1>
     <button onclick="logout()" class="btn small">Logout</button>
   </header>
 
-  <!-- Tabs untuk navigasi -->
-  <nav class="tabs">
+  <!-- Search / navigasi cepat -->
+  <input type="text" placeholder="Cari opsi..." id="searchOption" onkeyup="searchOption()" class="search-bar">
+
+  <!-- Tabs -->
+  <nav class="tabs fade-in">
     <button class="tabBtn active" onclick="showTab('siswa')">Daftar Siswa</button>
     <button class="tabBtn" onclick="showTab('absensi')">Absensi</button>
     <button class="tabBtn" onclick="showTab('tugas')">Tugas / PR</button>
     <button class="tabBtn" onclick="showTab('calendar')">Calendar</button>
-    <button class="tabBtn" onclick="showTab('scan')">Scan Wajah</button>
+    <button class="tabBtn" onclick="showTab('jadwal')">Jadwal & Piket</button>
     <button class="tabBtn" onclick="showTab('motivasi')">Motivasi</button>
+    <button class="tabBtn" onclick="showTab('kas')">Kas</button>
   </nav>
 
-  <div class="tabContent" id="siswa">
+  <!-- Konten tab -->
+  <div class="tabContent fade-in" id="siswa">
     <h2>Daftar Siswa</h2>
+    <input type="text" placeholder="Cari siswa..." id="searchSiswa" onkeyup="searchSiswa()" class="search-bar">
     <ul id="daftarSiswa"></ul>
   </div>
 
-  <div class="tabContent" id="absensi" style="display:none;">
-    <h2>Absensi ElevenTwo Lighthouse 2026</h2>
+  <div class="tabContent fade-in" id="absensi" style="display:none;">
+    <h2>Absensi</h2>
     <div id="absensiList"></div>
   </div>
 
-  <div class="tabContent" id="tugas" style="display:none;">
+  <div class="tabContent fade-in" id="tugas" style="display:none;">
     <h2>Tugas / PR</h2>
     <button onclick="tambahTugas()" class="btn small">Tambah Tugas</button>
     <ul id="listTugas"></ul>
   </div>
 
-  <div class="tabContent" id="calendar" style="display:none;">
+  <div class="tabContent fade-in" id="calendar" style="display:none;">
     <h2>Calendar</h2>
-    <input type="date" id="calendarDate" onchange="lihatTanggal()">
-    <p id="selectedDate">Pilih tanggal untuk melihat tugas atau absensi</p>
+    <input type="date" id="calendarDate" onchange="lihatTanggal()" class="search-bar">
+    <p id="selectedDate">Pilih tanggal untuk melihat absensi & tugas</p>
   </div>
 
-  <div class="tabContent" id="scan" style="display:none;">
+  <div class="tabContent fade-in" id="jadwal" style="display:none;">
+    <h2>Jadwal Pelajaran & Piket</h2>
+    <div id="jadwalList"></div>
+  </div>
+
+  <div class="tabContent fade-in" id="motivasi" style="display:none;">
+    <h2>Motivasi Hari Ini 🌸</h2>
+    <p id="motivasiText"></p>
+    <button onclick="motivasiRandom()" class="btn small">Motivasi Baru</button>
+  </div>
+
+  <div class="tabContent fade-in" id="kas" style="display:none;">
+    <h2>Kas / Keuangan</h2>
+    <ul id="kasList"></ul>
+  </div>
+
+  <!-- Scan Wajah -->
+  <div class="tabContent fade-in" id="scan" style="display:none;">
     <h2>Scan Wajah</h2>
-    <video id="video" width="320" height="240" autoplay></video>
+    <video id="video" width="320" height="240" autoplay playsinline></video>
     <button onclick="ambilFoto()" class="btn small">Ambil Foto</button>
     <canvas id="canvas" width="320" height="240"></canvas>
   </div>
 
-  <div class="tabContent" id="motivasi" style="display:none;">
-    <h2>Motivasi Hari Ini</h2>
-    <p id="motivasiText"></p>
-    <button onclick="motivasiRandom()" class="btn small">Motivasi Baru</button>
-  </div>
 </section>
 
 <script src="script.js"></script>
