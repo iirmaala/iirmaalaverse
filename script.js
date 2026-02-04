@@ -56,13 +56,24 @@ let motivasiList = [
 let adminUser = "admineleventwolighthouse";
 let adminPass = "112rumahbercahaya";
 
-// ===== LOGIN =====
 function login(){
   let u = document.getElementById("username").value.toLowerCase().replace(/\s+/g,'');
   let p = document.getElementById("password").value.toLowerCase().replace(/\s+/g,'');
-  if((siswa.map(s=>s.split(" ")[0].toLowerCase()).includes(u) && p) || (u===adminUser && p===adminPass)){
+  
+  // cek siswa
+  const siswaValid = siswa.some(s => {
+    const [userS, passS] = s.toLowerCase().split(" ");
+    return userS === u && passS === p;
+  });
+
+  // cek admin
+  const adminValid = (u === adminUser && p === adminPass);
+
+  if (siswaValid || adminValid){
     document.getElementById("loginSection").style.display="none";
     document.getElementById("appSection").style.display="block";
+    
+    // panggil fungsi app
     renderSiswa();
     renderTugas();
     renderJadwal();
@@ -74,6 +85,7 @@ function login(){
     document.getElementById("loginMsg").innerText="Username/Password salah!";
   }
 }
+
 
 function logout(){
   document.getElementById("appSection").style.display="none";
