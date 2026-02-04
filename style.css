@@ -1,75 +1,29 @@
-/* ===== Global ===== */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin:0; padding:20px;
-  background-color:#f5f3ff;
-  color:#333;
-}
-
-h1,h2 { color:#7c3aed; text-align:center; }
-
-section, .tabContent, .card {
-  background-color:#fff; padding:15px 20px;
-  margin-bottom:20px; border-radius:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.08);
-  transition: all 0.3s ease;
-}
-
-section:hover, .tabContent:hover { transform:translateY(-3px); }
-
-input, select {
-  padding:10px; margin:5px 0; border-radius:12px; border:1px solid #ccc;
-  width:100%; box-sizing:border-box; transition:0.3s;
-}
-
-input:focus, select:focus {
-  border-color:#a855f7; outline:none; box-shadow:0 0 8px rgba(124,58,237,0.3);
-}
-
-button {
-  padding:10px 18px; border-radius:12px; border:none;
-  background-color:#7c3aed; color:white; cursor:pointer; transition:0.3s;
-}
-
-button:hover { background-color:#a855f7; transform:scale(1.05); }
-
-.tabs { display:flex; flex-wrap:wrap; justify-content:center; margin-bottom:15px; }
-.tabBtn {
-  background-color:#e9d5ff; color:#7c3aed; border:none;
-  padding:10px 15px; margin:3px; border-radius:12px; cursor:pointer;
-  transition:all 0.3s ease;
-}
-.tabBtn:hover, .tabBtn.active { background-color:#7c3aed; color:#fff; transform:translateY(-2px); }
-
-.header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:15px; }
-
-ul { list-style:none; padding:0; }
-li { padding:5px 0; }
-
-.tugasItem, .absensiItem { padding:10px; border-radius:12px; background-color:#f3e8ff; margin-bottom:10px; transition:0.3s; }
-.tugasItem:hover, .absensiItem:hover { background-color:#e0cfff; transform:translateY(-2px); }
-
-canvas, video { display:block; margin:10px auto; border-radius:12px; border:2px solid #7c3aed; }
-
-.btn.small { padding:6px 12px; font-size:0.9rem; }
-
-.fade-in { animation: fadeIn 0.6s ease-in-out; }
-@keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
-
-.background-sampul {
-  position: absolute; top:0; left:0; right:0; bottom:0;
-  background-image:url('images/sampul.jpg');
-  background-size:cover; background-position:center;
-  filter:brightness(0.5);
-  z-index:0;
-}
-
-#appSection > * { position:relative; z-index:1; }
-
-.search-bar { margin:10px 0; padding:8px; border-radius:10px; border:1px solid #ccc; width:95%; }
-
-@media(max-width:480px){
-  .tabs{flex-direction:column;align-items:center;}
-  .header{flex-direction:column;}
-  input,select,button{width:100%;}
-}
+/* GLOBAL */
+body { font-family:'Poppins',sans-serif; margin:0; padding:20px; background-color:#f5f3ff; color:#333; overflow-x:hidden; }
+h1,h2{color:#7c3aed;text-align:center;}
+section, .tabContent, .card{background:#fff;padding:15px 20px;margin-bottom:20px;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,0.08);transition:all 0.3s ease;}
+section:hover, .tabContent:hover{transform:translateY(-3px);}
+input, select{padding:10px;margin:5px 0;border-radius:12px;border:1px solid #ccc;width:100%;box-sizing:border-box;transition:0.3s;}
+input:focus, select:focus{border-color:#a855f7;outline:none;box-shadow:0 0 8px rgba(124,58,237,0.3);}
+button{padding:10px 18px;border-radius:12px;border:none;background-color:#7c3aed;color:white;cursor:pointer;transition:0.3s;}
+button:hover{background-color:#a855f7;transform:scale(1.05);}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;margin-bottom:15px;}
+.tabBtn{background-color:#e9d5ff;color:#7c3aed;border:none;padding:10px 15px;margin:3px;border-radius:12px;cursor:pointer;transition:all 0.3s ease;}
+.tabBtn:hover,.tabBtn.active{background-color:#7c3aed;color:#fff;transform:translateY(-2px);}
+.header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:15px;}
+ul{list-style:none;padding:0;}
+li{padding:5px 0;}
+.tugasItem, .absensiItem{padding:10px;border-radius:12px;background-color:#f3e8ff;margin-bottom:10px;transition:0.3s;}
+.tugasItem:hover, .absensiItem:hover{background-color:#e0cfff;transform:translateY(-2px);}
+canvas, video{display:block;margin:10px auto;border-radius:12px;border:2px solid #7c3aed;}
+.btn.small{padding:6px 12px;font-size:0.9rem;}
+.fade-in{animation:fadeIn 0.6s ease-in-out;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.background-sampul{position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('images/sampul.jpg');background-size:cover;background-position:center;filter:brightness(0.5);z-index:0;}
+#appSection > *{position:relative;z-index:1;}
+.search-bar{margin:10px 0;padding:8px;border-radius:10px;border:1px solid #ccc;width:95%;}
+@media(max-width:480px){.tabs{flex-direction:column;align-items:center;}.header{flex-direction:column;}input,select,button{width:100%;}}
+.jadwalItem{padding:10px;margin-bottom:10px;border-radius:12px;background-color:#d8b4fe;color:#fff;transition:all 0.3s ease;}
+.jadwalItem:hover{background-color:#c084fc;transform:translateY(-2px);}
+.jadwalItem button{margin-top:5px;background-color:#fff;color:#7c3aed;}
+.jadwalItem button:hover{background-color:#7c3aed;color:#fff;}
