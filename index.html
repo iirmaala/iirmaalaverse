@@ -10,19 +10,16 @@
 <body>
 
 <!-- Login -->
-<section id="loginSection" class="card">
+<section id="loginSection" class="card fade-in">
   <h1>Login ElevenTwo Lighthouse 🌸</h1>
-  <label>Username:</label>
-  <input type="text" id="username" placeholder="Nama panggilan / awal / lengkap">
-  <label>Password:</label>
-  <input type="password" id="password" placeholder="Nama panggilan + nomor absen">
+  <input type="text" id="username" placeholder="Masukkan username">
+  <input type="password" id="password" placeholder="Masukkan password">
   <button onclick="login()" class="btn">Login</button>
   <p id="loginMsg"></p>
 </section>
 
 <!-- App utama -->
 <section id="appSection" style="display:none;">
-  <!-- background sampul -->
   <div class="background-sampul"></div>
 
   <header class="header fade-in">
@@ -30,10 +27,8 @@
     <button onclick="logout()" class="btn small">Logout</button>
   </header>
 
-  <!-- Search / navigasi cepat -->
   <input type="text" placeholder="Cari opsi..." id="searchOption" onkeyup="searchOption()" class="search-bar">
 
-  <!-- Tabs -->
   <nav class="tabs fade-in">
     <button class="tabBtn active" onclick="showTab('siswa')">Daftar Siswa</button>
     <button class="tabBtn" onclick="showTab('absensi')">Absensi</button>
@@ -44,7 +39,7 @@
     <button class="tabBtn" onclick="showTab('kas')">Kas</button>
   </nav>
 
-  <!-- Konten tab -->
+  <!-- Tabs content -->
   <div class="tabContent fade-in" id="siswa">
     <h2>Daftar Siswa</h2>
     <input type="text" placeholder="Cari siswa..." id="searchSiswa" onkeyup="searchSiswa()" class="search-bar">
